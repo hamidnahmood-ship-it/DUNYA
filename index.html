@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10172a">
+<link rel="manifest" href="manifest.webmanifest">
+<title>DUNYA 🌍 — World Clock & Quran</title>
+<style>
+:root{--bg:#0b1020;--panel:#151e33;--panel2:#202d49;--text:#f7f8fc;--muted:#aebbd1;--line:#34435f;--gold:#f4c95d;--accent:#39c978}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 0%,#28355d 0,transparent 35%),var(--bg);color:var(--text);font:16px system-ui,-apple-system,"Noto Naskh Arabic",sans-serif;min-height:100vh}
+.rainbow{height:5px;background:linear-gradient(90deg,#ff3434,#ff9d25,#ffe34d,#34cf75,#3aa5ff,#6554ef,#bd59ed)}
+header{max-width:1120px;margin:auto;padding:18px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}.logo{font-size:35px}.brand h1{margin:0;font-size:27px;letter-spacing:3px}.tag{font-size:12px;color:var(--muted)}
+select,input,button{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;min-width:0}
+button{cursor:pointer;background:var(--panel2);min-height:44px}nav{flex-wrap:wrap}nav button{min-height:44px}button:active{transform:scale(.98)}button:disabled{opacity:.5;cursor:not-allowed}
+main{max-width:1120px;margin:auto;padding:8px 16px 36px}
+.hero{border:1px solid var(--line);border-radius:22px;padding:20px;background:linear-gradient(135deg,#202e52,#17233d 65%,#30204b);display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+.hero h2{font-size:clamp(24px,5vw,38px);margin:5px 0}.muted{color:var(--muted);font-size:13px}.bigclock{text-align:center;background:#0b1428a8;border:1px solid #526184;border-radius:17px;padding:16px}.bigclock strong{font-size:clamp(34px,7vw,54px);font-variant-numeric:tabular-nums}
+nav{display:flex;gap:8px;overflow:auto;padding:16px 0 10px}nav button{white-space:nowrap}nav button.active{background:#36517c;border-color:#8ca9d8}
+.panel{display:none}.panel.active{display:block}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:16px 0 12px}.sectionhead h3{margin:0;font-size:20px}
+.controls{display:grid;grid-template-columns:1fr 150px 145px;gap:9px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px}
+.city,.surah,.dua{background:linear-gradient(145deg,var(--panel),#111a2e);border:1px solid var(--line);border-radius:16px;padding:14px}
+.city{border-inline-start:4px solid var(--accent)}.citytop{display:flex;justify-content:space-between;gap:8px}.city h4{margin:0 0 3px}.time{font-size:28px;font-weight:750;margin:12px 0 2px;font-variant-numeric:tabular-nums}.date,.country{color:var(--muted);font-size:12px}.smallbtn{font-size:12px;padding:7px 9px}
+.quranlayout{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:12px}.surahlist{max-height:68vh;overflow:auto;display:grid;gap:7px;align-content:start}.surah{display:flex;justify-content:space-between;align-items:center;text-align:start;gap:8px}.surah.selected{border-color:var(--gold);background:#26324b}.reader{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;min-height:300px}.readerhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.ayah{padding:15px 4px;border-bottom:1px solid var(--line)}.arabic{font-size:27px;line-height:2.05;text-align:right;color:#fff}.translation{font-size:16px;line-height:1.9;color:#d7e0ef;margin-top:7px}.ayahmeta{font-size:11px;color:var(--gold);margin-bottom:6px}
+.audio{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.status{padding:10px 12px;border-radius:12px;background:#101a2d;color:#c7d5e9;font-size:13px;margin:10px 0}.dua .arabic{font-size:25px}.dua p{line-height:1.8;color:#d7e0ef}.dua h4{margin:0 0 8px;color:var(--gold)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 8px}
+@media(max-width:680px){.hero{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.controls input{grid-column:1/-1}.quranlayout{grid-template-columns:1fr}.surahlist{max-height:240px;grid-template-columns:1fr 1fr}.reader{padding:12px}}
+</style></head>
+<body><div class="rainbow"></div>
+<header><div class="brand"><div class="logo">🌍</div><div><h1>DUNYA</h1><div class="tag">آپ کی دنیا، آپ کا وقت اور قرآن</div></div></div>
+<select id="lang" aria-label="Language"><option value="ur">اردو</option><option value="en">English</option><option value="ar">العربية</option><option value="fa">فارسی</option><option value="hi">हिन्दी</option><option value="tr">Türkçe</option></select></header>
+<main>
+<section class="hero"><div><div class="muted">DUNYA WORLD & ISLAMIC APP</div><h2>دنیا کے اوقات، قرآن کی روشنی</h2><p class="muted">دنیا بھر کے شہروں کا وقت دیکھیں، قرآن پڑھیں، ترجمہ سنیں اور دعائیں پڑھیں۔</p></div><div class="bigclock"><strong id="localTime">--:--:--</strong><div class="muted" id="localDate">آپ کا مقامی وقت</div></div></section>
+<nav><button class="active" data-tab="clock">🌍 ورلڈ کلاک</button><button data-tab="quran">📖 قرآن مجید</button><button data-tab="duas">🤲 اسلامی دعائیں</button><button data-tab="about">ℹ️ ایپ کے بارے میں</button></nav>
+
+<section id="clock" class="panel active">
+<div class="controls"><input id="citySearch" placeholder="شہر، ملک یا ٹائم زون تلاش کریں"><select id="timeFormat"><option value="24">24 گھنٹے</option><option value="12">12 گھنٹے</option></select><button id="favFilter">★ پسندیدہ</button></div>
+<div class="sectionhead"><h3>دنیا کے شہر</h3><span class="muted" id="cityCount"></span></div><div class="grid" id="cities"></div>
+</section>
+
+<section id="quran" class="panel">
+<div class="sectionhead"><h3>📖 قرآن مجید</h3><span class="muted">114 سورتیں · عربی اور اردو ترجمہ</span></div>
+<div class="status" id="quranStatus">قرآن کا ڈیٹا لوڈ ہو رہا ہے۔ پہلی بار انٹرنیٹ درکار ہے۔ تمام سورتیں ایک ساتھ آف لائن محفوظ کی جا سکتی ہیں۔</div>
+<div class="audio"><button id="downloadAll">⬇️ تمام 114 سورتیں آف لائن محفوظ کریں</button><span class="muted" id="bulkProgress">ابھی آف لائن محفوظ نہیں</span></div>
+<div class="quranlayout"><div><input id="surahSearch" placeholder="سورت تلاش کریں" style="width:100%;margin-bottom:8px"><div class="surahlist" id="surahList"></div></div>
+<div class="reader"><div class="readerhead"><div><h3 id="surahTitle" style="margin:0">سورت منتخب کریں</h3><span class="muted" id="surahInfo"></span></div><button id="saveSurah" disabled>⬇️ سورت محفوظ کریں</button></div>
+<div class="audio"><select id="reciter"><option value="ar.alafasy">مشاری العفاسی</option><option value="ar.abdurrahmaansudais">عبدالرحمن السدیس</option><option value="ar.husary">محمود خلیل الحصری</option></select><button id="playSurah" disabled>▶️ تلاوت چلائیں</button><button id="stopAudio" disabled>■ بند کریں</button><button id="saveAudio" disabled>🎧 اس سورت کی آڈیو آف لائن محفوظ کریں</button></div><div id="ayahs"><div class="muted">پڑھنے کے لیے کوئی سورت منتخب کریں۔</div></div></div></div>
+</section>
+
+<section id="duas" class="panel"><div class="sectionhead"><h3>🤲 اسلامی دعائیں</h3><span class="muted">روزمرہ کی دعائیں</span></div><div class="grid" id="duaList"></div></section>
+<section id="about" class="panel"><div class="reader"><h2>DUNYA 🌍</h2><p>World Clock · Quran Majeed · Islamic Duas</p><p>یہ ایپ مفت استعمال کے لیے بنائی گئی ہے۔ اس میں اشتہارات شامل نہیں ہیں۔</p><h3>دعا برائے حامد</h3><div class="arabic">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div><p>اے ہمارے رب! ہمیں دنیا میں بھلائی عطا فرما اور آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔</p><p class="muted">نوٹ: قرآن کا عربی متن، ترجمہ اور آڈیو معتبر آن لائن قرآن سروس سے حاصل ہوتے ہیں۔</p></div></section>
+<footer>DUNYA 🌍 · مفت · بغیر اشتہارات · وقت آپ کے آلے کے ٹائم زون کے مطابق</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const citiesData=[["London","United Kingdom","Europe/London"],["Karachi","Pakistan","Asia/Karachi"],["Lahore","Pakistan","Asia/Karachi"],["Islamabad","Pakistan","Asia/Karachi"],["Tehran","Iran","Asia/Tehran"],["Makkah","Saudi Arabia","Asia/Riyadh"],["Madinah","Saudi Arabia","Asia/Riyadh"],["Riyadh","Saudi Arabia","Asia/Riyadh"],["Dubai","UAE","Asia/Dubai"],["Istanbul","Türkiye","Europe/Istanbul"],["New York","USA","America/New_York"],["Los Angeles","USA","America/Los_Angeles"],["Toronto","Canada","America/Toronto"],["Tokyo","Japan","Asia/Tokyo"],["Beijing","China","Asia/Shanghai"],["New Delhi","India","Asia/Kolkata"],["Dhaka","Bangladesh","Asia/Dhaka"],["Singapore","Singapore","Asia/Singapore"],["Sydney","Australia","Australia/Sydney"],["Cairo","Egypt","Africa/Cairo"],["Berlin","Germany","Europe/Berlin"],["Paris","France","Europe/Paris"],["Moscow","Russia","Europe/Moscow"],["Doha","Qatar","Asia/Qatar"],["Kabul","Afghanistan","Asia/Kabul"],["Kuala Lumpur","Malaysia","Asia/Kuala_Lumpur"],["Seoul","South Korea","Asia/Seoul"],["Nairobi","Kenya","Africa/Nairobi"],["Sao Paulo","Brazil","America/Sao_Paulo"],["Mexico City","Mexico","America/Mexico_City"]];
+let favorites=new Set(JSON.parse(localStorage.getItem("dunya-favs")||"[]")),onlyFav=false,currentSurah=null,ayahAudio=[],audioIndex=0;
+const cityKey=c=>c[0]+"|"+c[2];
+const audio=new Audio(); audio.preload="none";
+function zoneTime(z){return new Intl.DateTimeFormat(undefined,{timeZone:z,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:$("timeFormat").value==="12"}).format(new Date())}
+function zoneDate(z){return new Intl.DateTimeFormat("ur",{timeZone:z,weekday:"long",year:"numeric",month:"short",day:"numeric"}).format(new Date())}
+function tick(){ $("localTime").textContent=new Intl.DateTimeFormat(undefined,{hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(new Date());$("localDate").textContent=new Intl.DateTimeFormat("ur",{dateStyle:"full"}).format(new Date());document.querySelectorAll("[data-zone]").forEach(e=>e.textContent=zoneTime(e.dataset.zone));document.querySelectorAll("[data-date]").forEach(e=>e.textContent=zoneDate(e.dataset.date));}
+function renderCities(){let q=$("citySearch").value.toLowerCase().trim();let list=citiesData.filter(c=>(!onlyFav||favorites.has(cityKey(c)))&&c.join(" ").toLowerCase().includes(q));$("cityCount").textContent=list.length+" شہر";$("cities").innerHTML=list.map(c=>`<article class="city"><div class="citytop"><div><h4>${c[0]}</h4><div class="country">${c[1]} · ${c[2]}</div></div><button class="smallbtn" data-fav="${cityKey(c)}">${favorites.has(cityKey(c))?"★":"☆"}</button></div><div class="time" data-zone="${c[2]}">${zoneTime(c[2])}</div><div class="date" data-date="${c[2]}">${zoneDate(c[2])}</div></article>`).join("")||'<div class="status">کوئی شہر نہیں ملا۔</div>';document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{let z=b.dataset.fav;favorites.has(z)?favorites.delete(z):favorites.add(z);localStorage.setItem("dunya-favs",JSON.stringify([...favorites]));renderCities()});}
+$("citySearch").oninput=renderCities;$("timeFormat").onchange=()=>{renderCities();tick()};$("favFilter").onclick=()=>{onlyFav=!onlyFav;$("favFilter").textContent=onlyFav?"تمام شہر":"★ پسندیدہ";renderCities()};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab))});
+const duaData=[
+["صبح و شام کی دعا","أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ","ہم نے صبح کی اور تمام بادشاہی اللہ ہی کے لیے ہے۔"],
+["کھانے سے پہلے","بِسْمِ اللَّهِ","اللہ کے نام سے شروع کرتا ہوں۔"],
+["کھانے کے بعد","الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا","تمام تعریف اللہ کے لیے جس نے ہمیں کھلایا اور پلایا۔"],
+["علم میں اضافے کی دعا","رَبِّ زِدْنِي عِلْمًا","اے میرے رب! میرے علم میں اضافہ فرما۔"],
+["والدین کے لیے دعا","رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","اے میرے رب! ان دونوں پر رحم فرما جیسے انہوں نے بچپن میں میری پرورش کی۔"],
+["دعا برائے حامد","رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","اے ہمارے رب! ہمیں دنیا اور آخرت میں بھلائی عطا فرما اور آگ کے عذاب سے بچا۔"]
+];
+$("duaList").innerHTML=duaData.map(d=>`<article class="dua"><h4>${d[0]}</h4><div class="arabic">${d[1]}</div><p>${d[2]}</p></article>`).join("");
+const fallbackNames=["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+let surahs=[];
+const DB_NAME="dunya-quran-offline", DB_STORE="surahs";
+function openQuranDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(DB_STORE);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function saveQuranData(n,data){const db=await openQuranDB();return new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,"readwrite");tx.objectStore(DB_STORE).put(data,String(n));tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error)};});}
+async function cached(n){try{const db=await openQuranDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,"readonly");const req=tx.objectStore(DB_STORE).get(String(n));req.onsuccess=()=>{db.close();resolve(req.result||null)};req.onerror=()=>{db.close();reject(req.error)};});}catch(e){try{return JSON.parse(localStorage.getItem("dunya-surah-"+n)||"null")}catch{return null}}}
+function showStatus(t){$("quranStatus").textContent=t}
+async function loadSurahIndex(){let cache=localStorage.getItem("dunya-surah-index");try{let r=await fetch("https://api.alquran.cloud/v1/surah");if(!r.ok)throw Error();let j=await r.json();if(j.code!==200)throw Error();surahs=j.data;localStorage.setItem("dunya-surah-index",JSON.stringify(surahs));}catch{surahs=JSON.parse(cache||"[]");if(!surahs.length)surahs=fallbackNames.map((name,i)=>({number:i+1,name,englishName:"Surah "+(i+1),numberOfAyahs:0,revelationType:""}));showStatus("انٹرنیٹ دستیاب نہیں۔ سورتوں کی فہرست دکھائی جا رہی ہے؛ محفوظ شدہ سورتیں آف لائن کھل سکتی ہیں۔");}renderSurahList();}
+function renderSurahList(){let q=$("surahSearch").value.trim().toLowerCase();$("surahList").innerHTML=surahs.filter(s=>(s.name+" "+s.englishName+" "+s.number).toLowerCase().includes(q)).map(s=>`<button class="surah ${currentSurah?.number===s.number?"selected":""}" data-surah="${s.number}"><span>${s.number}. ${s.name}<small class="muted" style="display:block">${s.englishName}</small></span><small class="muted">${s.numberOfAyahs||""}</small></button>`).join("");document.querySelectorAll("[data-surah]").forEach(b=>b.onclick=()=>openSurah(Number(b.dataset.surah)));}
+$("surahSearch").oninput=renderSurahList;
+async function openSurah(n){stopPlayback();currentSurah=surahs.find(s=>s.number===n);renderSurahList();$("surahTitle").textContent=currentSurah.name+" — "+currentSurah.englishName;$("surahInfo").textContent=(currentSurah.numberOfAyahs||"")+" آیات · "+(currentSurah.revelationType||"");$("saveSurah").disabled=true;$("playSurah").disabled=true;$("ayahs").innerHTML='<div class="status">سورت لوڈ ہو رہی ہے…</div>';let data=await cached(n);if(data){renderAyahs(data);showStatus("محفوظ شدہ قرآن دستیاب ہے۔");}else{showStatus("قرآن کا متن اور اردو ترجمہ انٹرنیٹ سے حاصل کیا جا رہا ہے۔");}
+try{let url=`https://api.alquran.cloud/v1/surah/${n}/editions/quran-uthmani,ur.jalandhry`;let r=await fetch(url);if(!r.ok)throw Error();let j=await r.json();if(j.code!==200)throw Error();let arabic=j.data[0].ayahs,urdu=j.data[1].ayahs;data={number:n,arabic:arabic.map((a,i)=>({text:a.text,translation:urdu[i]?.text||"",number:a.numberInSurah})),meta:currentSurah};try{await saveQuranData(n,data);}catch(e){}renderAyahs(data);showStatus("سورت لوڈ ہو گئی۔ اسے آف لائن محفوظ کرنے کے لیے بٹن دبائیں۔");}catch(e){if(!data){$("ayahs").innerHTML='<div class="status">یہ سورت ابھی دستیاب نہیں۔ انٹرنیٹ چیک کریں۔</div>';showStatus("قرآن سرور سے رابطہ نہیں ہو سکا۔");}}
+$("saveSurah").disabled=!data;$("playSurah").disabled=!data;$("saveAudio").disabled=!data; }
+function renderAyahs(data){$("ayahs").innerHTML=data.arabic.map(a=>`<article class="ayah"><div class="ayahmeta">آیت ${a.number}</div><div class="arabic">${a.text}</div><div class="translation">${a.translation}</div></article>`).join("");}
+$("saveSurah").onclick=()=>{if(!currentSurah)return;cached(currentSurah.number).then(async d=>{if(!d)return;try{await saveQuranData(currentSurah.number,d);showStatus("یہ سورت اس آلے میں محفوظ ہے۔ آف لائن بھی پڑھی جا سکتی ہے۔")}catch{showStatus("اس آلے میں جگہ کم ہے؛ سورت محفوظ نہیں ہو سکی۔")}})};
+$("downloadAll").onclick=async()=>{
+  const btn=$("downloadAll");btn.disabled=true;let done=0,failed=[];
+  try{
+    for(let n=1;n<=114;n++){
+      try{
+        const r=await fetch(`https://api.alquran.cloud/v1/surah/${n}/editions/quran-uthmani,ur.jalandhry`);
+        if(!r.ok)throw Error("network");const j=await r.json();if(j.code!==200||!j.data?.[0]?.ayahs||!j.data?.[1]?.ayahs)throw Error("data");
+        const meta=surahs.find(s=>s.number===n)||{number:n,name:fallbackNames[n-1],englishName:"Surah "+n,numberOfAyahs:j.data[0].ayahs.length};
+        const data={number:n,arabic:j.data[0].ayahs.map((a,i)=>({text:a.text,translation:j.data[1].ayahs[i]?.text||"",number:a.numberInSurah})),meta};
+        await saveQuranData(n,data);done++;
+      }catch(e){failed.push(n)}
+      $("bulkProgress").textContent=`${done} / 114 محفوظ · ${n} / 114`;
+      showStatus(`قرآن آف لائن محفوظ ہو رہا ہے: ${done} سورتیں مکمل`);
+    }
+    showStatus(failed.length?`${done} سورتیں محفوظ ہو گئیں۔ کچھ سورتیں رہ گئیں؛ انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔`:`الحمدللہ! تمام 114 سورتیں آف لائن محفوظ ہو گئیں۔`);
+    $("bulkProgress").textContent=`${done} / 114 محفوظ`;
+  }catch(e){showStatus("محفوظ کرنے میں مسئلہ آیا۔ انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔");}
+  btn.disabled=false;
+};
+async function saveCurrentSurahAudio(){
+  if(!currentSurah)return;const btn=$("saveAudio");btn.disabled=true;let saved=0;
+  try{
+    const r=await fetch(`https://api.alquran.cloud/v1/surah/${currentSurah.number}/${$("reciter").value}`);if(!r.ok)throw Error();const j=await r.json();if(j.code!==200)throw Error();
+    const cache=await caches.open("dunya-audio-v1");const urls=j.data.ayahs.map(a=>a.audio);await saveQuranData("audio-"+currentSurah.number+"-"+$("reciter").value,urls);
+    for(let i=0;i<urls.length;i++){
+      const u=urls[i];if(!(await cache.match(u))){const response=await fetch(u);if(!response.ok)throw Error();await cache.put(u,response.clone());}
+      saved++;$("bulkProgress").textContent=`آڈیو ${saved} / ${urls.length} محفوظ`;
+    }
+    showStatus("اس سورت کی آڈیو اس آلے میں محفوظ ہو گئی۔");
+  }catch(e){showStatus("آڈیو مکمل محفوظ نہیں ہو سکی۔ انٹرنیٹ اور فون کی خالی جگہ چیک کریں۔");}
+  btn.disabled=false;
+}
+$("saveAudio").onclick=saveCurrentSurahAudio;
+async function startPlayback(){if(!currentSurah)return;stopPlayback();$("playSurah").disabled=true;$("stopAudio").disabled=false;showStatus("تلاوت کا آڈیو حاصل کیا جا رہا ہے…");try{let savedUrls=await cached("audio-"+currentSurah.number+"-"+$("reciter").value);if(savedUrls){ayahAudio=savedUrls;}else{let r=await fetch(`https://api.alquran.cloud/v1/surah/${currentSurah.number}/${$("reciter").value}`);let j=await r.json();if(j.code!==200)throw Error();ayahAudio=j.data.ayahs.map(a=>a.audio);}audioIndex=0;playNext();}catch{showStatus("آڈیو دستیاب نہیں؛ انٹرنیٹ چیک کریں یا پہلے آڈیو محفوظ کریں۔");$("playSurah").disabled=false;$("stopAudio").disabled=true;}}
+let activeAudioObjectURL=null;
+async function playNext(){if(audioIndex>=ayahAudio.length){showStatus("سورت مکمل ہو گئی۔");$("playSurah").disabled=false;$("stopAudio").disabled=true;return;}const url=ayahAudio[audioIndex++];try{const c=await caches.open("dunya-audio-v1");const hit=await c.match(url);if(activeAudioObjectURL){URL.revokeObjectURL(activeAudioObjectURL);activeAudioObjectURL=null;}if(hit){activeAudioObjectURL=URL.createObjectURL(await hit.blob());audio.src=activeAudioObjectURL;}else{audio.src=url;}}catch{audio.src=url;}audio.play().then(()=>showStatus("تلاوت جاری ہے — آیت "+audioIndex)).catch(()=>{showStatus("آڈیو چلانے کے لیے پلے دبائیں یا انٹرنیٹ چیک کریں۔");$("playSurah").disabled=false;$("stopAudio").disabled=true;});}
+audio.onended=playNext;
+function stopPlayback(){audio.pause();if(activeAudioObjectURL){URL.revokeObjectURL(activeAudioObjectURL);activeAudioObjectURL=null;}audio.removeAttribute("src");audio.load();ayahAudio=[];audioIndex=0;$("stopAudio").disabled=true;if(currentSurah)$("playSurah").disabled=false;}
+$("playSurah").onclick=startPlayback;$("stopAudio").onclick=stopPlayback;
+renderCities();tick();setInterval(tick,1000);loadSurahIndex();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>showStatus("آف لائن ایپ شیل محفوظ نہیں ہو سکا؛ براہِ کرم HTTPS پر ایپ کھولیں۔")));}
+</script></body></html>

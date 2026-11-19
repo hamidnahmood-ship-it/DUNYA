@@ -1,0 +1,13 @@
+{
+  "id": "./",
+  "name": "DUNYA — World Clock & Quran",
+  "short_name": "DUNYA",
+  "description": "World clock, Quran Majeed with Urdu translation and Islamic duas.",
+  "lang": "ur",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#10172a"
+}
